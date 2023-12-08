@@ -5,29 +5,37 @@ using namespace std;
 
 int main()
 {
-    // distance = (time-wait)*wait
+  // distance = (time-wait)*wait
 
-    const int N = 4;
-    //array<int, N> arrayT = {7, 15, 30};
-    array<int, N> arrayT = {51, 92, 68, 90};
-    //array<int, N> arrayD = {9, 40, 200};
-    array<int, N> arrayD = {222, 2031, 1126, 1225};
-  int res = 1;  
-  for (int i = 0; i < N; i++) {
-        int t = arrayT[i];
-        int rd = arrayD[i];
-        cout << "t: " << t << " d: " << rd << endl;
-        int r = 0;
-        for (int j = 0; j < t+1; j++) {
-            int d = (t-j)*j;
-            if (d <= rd) {
-                continue;
-            }
-            cout << j << " d:" << d << endl;
-            r++;
-        }
-      res *= r;
+  //long t = 15;
+  //long t = 71530;
+  long t = 51926890;
+  
+  //long rd = 40;
+  //long rd = 940200;
+  long rd = 222203111261225;
+  cout << "t: " << t << " d: " << rd << endl;
+  long r = 0;
+  
+  for (long j = 0; j < t+1; j++) {
+    long d = (t-j)*j;
+    if (d <= rd) {
+        continue;
     }
-  cout << res << endl;
-    return 0;
+    cout << ">>" << j << " d:" << d << endl;
+    r = j;
+    break;
+  }
+
+  for (long j = t; j < t+1; j--) {
+    long d = (t-j)*j;
+    if (d <= rd) {
+        continue;
+    }
+    cout << ">>" << j << " d:" << d << endl;
+    r = j - r + 1;
+    break;
+  }
+  cout << r << endl;
+  return 0;
 }
