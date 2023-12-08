@@ -23,12 +23,15 @@ using namespace std;
 const array<char, 5> power = {'T', 'J', 'Q', 'K', 'A'};
 
 int get_power(char c) {
+  if (c == 'J') {
+    return 0;
+  } 
   if (isdigit(c)) {
-    return c - 0x32;
+    return c - 0x31;
   }
   for (int i = 0; i < 5; i++) {
     if (power[i] == c) {
-      return i+8;
+      return i+9;
     }
   }
   return -1;
@@ -47,7 +50,29 @@ int get_type(string s) {
   //for (auto i: m) {
   //  cout << i.first << " -> " << i.second << endl;
   //}
-  switch (m.size()) {
+  int size = m.size();
+  if (size == 1) {
+    return FIVE_OF_KIND;
+  }
+
+  if (m['J']) {
+    size--;
+    int n = 0;
+    char c;
+    for (auto i: m) {
+      if (i.first == 'J') {
+        continue;
+      }
+      else if (i.second > n) {
+        n = i.second;
+        c = i.first;
+      }
+    }
+    m[c] += m['J'];
+    m['J'] = 0;
+  }
+
+  switch (size) {
     case 5: 
       return HIGH_CARD;
     case 4: 
